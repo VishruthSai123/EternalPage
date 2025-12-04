@@ -2,27 +2,28 @@ import { motion } from 'framer-motion'
 
 const footerLinks = {
   products: {
-    title: 'Products',
+    title: 'Features',
     links: [
-      { label: 'Code Eternal IDE', href: '#' },
-      { label: 'Code Eternal Cloud', href: '#' },
-      { label: 'Code Eternal CLI', href: '#' },
+      { label: 'Prompt Builder', href: '#' },
+      { label: 'Snippet Library', href: '#' },
+      { label: 'Templates', href: '#' },
+      { label: 'Community Hub', href: '#' },
     ],
   },
   byRayst: {
-    title: 'Developers',
+    title: 'Resources',
     links: [
       { label: 'Documentation', href: '#' },
-      { label: 'API Reference', href: '#' },
+      { label: 'Prompt Guide', href: '#' },
       { label: 'Tutorials', href: '#' },
-      { label: 'Community', href: '#' },
+      { label: 'Blog', href: '#' },
     ],
   },
   resources: {
     title: 'Company',
     links: [
       { label: 'About Us', href: '#' },
-      { label: 'Careers', href: '#' },
+      { label: 'Changelog', href: '#' },
       { label: 'Privacy Policy', href: '#' },
       { label: 'Terms of Service', href: '#' },
     ],

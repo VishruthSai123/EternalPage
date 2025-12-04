@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { GlowingEffect } from './GlowingEffect'
 
 const features = [
   {
@@ -9,6 +10,8 @@ const features = [
     ),
     title: 'Lightning Fast',
     description: 'Build and deploy with blazing speed using our optimized toolchain.',
+    iconColor: 'text-neon-cyan',
+    iconBg: 'bg-neon-cyan/10',
   },
   {
     icon: (
@@ -18,6 +21,8 @@ const features = [
     ),
     title: 'Enterprise Security',
     description: 'Bank-grade security with end-to-end encryption for your codebase.',
+    iconColor: 'text-neon-purple',
+    iconBg: 'bg-neon-purple/10',
   },
   {
     icon: (
@@ -27,6 +32,8 @@ const features = [
     ),
     title: 'Infinite Scalability',
     description: 'From startup to enterprise, scale without limits or bottlenecks.',
+    iconColor: 'text-neon-cyan',
+    iconBg: 'bg-neon-cyan/10',
   },
   {
     icon: (
@@ -36,6 +43,8 @@ const features = [
     ),
     title: 'Developer First',
     description: 'Built by developers, for developers. Your workflow, amplified.',
+    iconColor: 'text-neon-purple',
+    iconBg: 'bg-neon-purple/10',
   },
 ]
 
@@ -46,18 +55,33 @@ const FeatureCard = ({ feature, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.1 * index }}
-      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className="feature-card-glow bg-[#0c0d12]/80 backdrop-blur-lg border border-white/[0.06] rounded-xl p-5 hover:border-white/10 transition-all duration-300"
+      className="relative group h-full"
     >
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-neon-purple">
-          {feature.icon}
+      {/* Card with hover glow effect */}
+      <div className="relative h-full rounded-2xl bg-[#0a0b10]/95 border border-white/[0.08] p-6 transition-all duration-300 group-hover:border-white/[0.15] overflow-hidden">
+        {/* Glowing Effect on hover */}
+        <GlowingEffect
+          spread={40}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+          borderWidth={2}
+        />
+        
+        {/* Icon and Title Row */}
+        <div className="flex items-center gap-3 mb-4 relative z-10">
+          <div className={`w-9 h-9 rounded-lg ${feature.iconBg} flex items-center justify-center ${feature.iconColor}`}>
+            {feature.icon}
+          </div>
+          <h3 className="font-semibold text-white text-base">{feature.title}</h3>
         </div>
-        <h3 className="font-semibold text-white text-sm">{feature.title}</h3>
+        
+        {/* Description */}
+        <p className="text-sm text-white/50 leading-relaxed relative z-10">
+          {feature.description}
+        </p>
       </div>
-      <p className="text-xs text-white/50 leading-relaxed">
-        {feature.description}
-      </p>
     </motion.div>
   )
 }
@@ -72,16 +96,16 @@ const FeatureStrip = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+          className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white"
         >
-          <span className="gradient-text">Empower</span>
+          Empower
         </motion.h2>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold text-neon-purple mb-6"
+          className="text-3xl md:text-4xl lg:text-5xl font-bold text-neon-purple mb-8"
         >
           Modern Developers
         </motion.h2>
@@ -97,18 +121,42 @@ const FeatureStrip = () => {
         </motion.p>
       </div>
 
-      {/* Purple Gradient Strip with Feature Cards */}
+      {/* Purple Gradient Container with Feature Cards */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.3 }}
-        className="feature-strip rounded-3xl max-w-5xl mx-auto p-8 md:p-10"
+        className="relative max-w-5xl mx-auto"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {features.map((feature, index) => (
-            <FeatureCard key={index} feature={feature} index={index} />
-          ))}
+        {/* Gradient Background Container */}
+        <div className="relative rounded-[2rem] p-8 md:p-10 overflow-hidden">
+          {/* Purple gradient background */}
+          <div 
+            className="absolute inset-0 rounded-[2rem]"
+            style={{
+              background: `linear-gradient(135deg, 
+                rgba(123, 92, 255, 0.5) 0%, 
+                rgba(147, 112, 255, 0.4) 25%,
+                rgba(168, 132, 255, 0.35) 50%,
+                rgba(180, 140, 255, 0.4) 75%,
+                rgba(200, 120, 200, 0.45) 100%
+              )`,
+            }}
+          />
+          
+          {/* Subtle inner glow */}
+          <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-white/[0.08] via-transparent to-transparent" />
+          
+          {/* Bottom glow effect */}
+          <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[80%] h-32 bg-gradient-to-t from-neon-purple/30 via-neon-magenta/20 to-transparent blur-3xl pointer-events-none" />
+
+          {/* Cards Grid */}
+          <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {features.map((feature, index) => (
+              <FeatureCard key={index} feature={feature} index={index} />
+            ))}
+          </div>
         </div>
       </motion.div>
     </section>

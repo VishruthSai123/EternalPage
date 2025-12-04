@@ -258,18 +258,23 @@ void main() {
     const onPointerMove = (e) => {
       const rect = canvas.getBoundingClientRect();
       const scale = renderer.dpr || 1;
+      // Calculate position relative to canvas, even if event is on another element
       const x = (e.clientX - rect.left) * scale;
       const y = (rect.height - (e.clientY - rect.top)) * scale;
-      mouseTargetRef.current = [x, y];
-      if (mouseDampening <= 0) {
-        uniforms.iMouse.value = [x, y];
-      }
+      // Clamp to canvas bounds
+      const clampedX = Math.max(0, Math.min(x, rect.width * scale));
+      const clampedY = Math.max(0, Math.min(y, rect.height * scale));
+      mouseTargetRef.current = [clampedX, clampedY];
     };
-    canvas.addEventListener('pointermove', onPointerMove);
+    // Listen on window to capture mouse movement even over content overlays
+    window.addEventListener('pointermove', onPointerMove);
 
     const loop = (t) => {
       rafRef.current = requestAnimationFrame(loop);
       uniforms.iTime.value = t * 0.001;
+      
+      // Always sync mouse position in the animation frame for smooth updates
+      const target = mouseTargetRef.current;
       if (mouseDampening > 0) {
         if (!lastTimeRef.current) lastTimeRef.current = t;
         const dt = (t - lastTimeRef.current) / 1000;
@@ -277,11 +282,13 @@ void main() {
         const tau = Math.max(1e-4, mouseDampening);
         let factor = 1 - Math.exp(-dt / tau);
         if (factor > 1) factor = 1;
-        const target = mouseTargetRef.current;
         const cur = uniforms.iMouse.value;
         cur[0] += (target[0] - cur[0]) * factor;
         cur[1] += (target[1] - cur[1]) * factor;
       } else {
+        // Instant update but synchronized with render frame
+        uniforms.iMouse.value[0] = target[0];
+        uniforms.iMouse.value[1] = target[1];
         lastTimeRef.current = t;
       }
       if (!paused && programRef.current && meshRef.current) {
@@ -296,7 +303,7 @@ void main() {
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      canvas.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointermove', onPointerMove);
       ro.disconnect();
       if (canvas.parentElement === container) {
         container.removeChild(canvas);

@@ -15,7 +15,7 @@ const Hero = () => {
           spotlightRadius={0.6}
           spotlightSoftness={1.2}
           spotlightOpacity={0.8}
-          mouseDampening={0.12}
+          mouseDampening={0}
           distortAmount={0.5}
           shineDirection="left"
           mixBlendMode="normal"
@@ -39,7 +39,7 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 mb-8"
         >
-          <span className="text-xs font-medium text-white/70">✨ Now in Public Beta</span>
+          <span className="text-xs font-medium text-white/70">🚀 Desktop App Now Available</span>
           <svg className="w-3 h-3 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
@@ -52,7 +52,7 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
         >
-          <span className="gradient-text">Build Timeless Software.</span>
+          <span className="gradient-text">Craft Perfect AI Prompts.</span>
         </motion.h1>
 
         {/* Subheadline */}
@@ -62,7 +62,7 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Code Eternal empowers developers to craft code that stands the test of time with cutting-edge tools and insights.
+          Build structured prompts with project context, save reusable snippets, and get consistently better AI-generated code.
         </motion.p>
 
         {/* CTA Button */}
@@ -75,7 +75,7 @@ const Hero = () => {
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
-            <span>Get Started Free</span>
+            <span>Download for Free</span>
           </button>
         </motion.div>
       </div>

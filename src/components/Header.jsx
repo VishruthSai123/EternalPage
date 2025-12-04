@@ -60,9 +60,9 @@ const Header = () => {
   }, [isOpen])
 
   const navLinksData = [
-    { label: 'Docs', href: '#docs' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Pricing', href: '#pricing' },
+    { label: 'Features', href: '#features' },
+    { label: 'Templates', href: '#templates' },
+    { label: 'Download', href: '#download' },
   ]
 
   return (

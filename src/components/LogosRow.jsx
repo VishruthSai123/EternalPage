@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion'
 
 const logos = [
-  { name: 'Vercel' },
-  { name: 'Stripe' },
-  { name: 'Shopify' },
-  { name: 'GitHub' },
-  { name: 'Figma' },
+  { name: 'GitHub Copilot' },
+  { name: 'ChatGPT' },
+  { name: 'Claude' },
+  { name: 'Cursor' },
+  { name: 'Codeium' },
 ]
 
 const LogosRow = () => {
@@ -20,7 +20,7 @@ const LogosRow = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3"
         >
-          <span className="gradient-text">Trusted by the best</span>
+          <span className="gradient-text">Works with your favorite</span>
         </motion.h2>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -29,7 +29,7 @@ const LogosRow = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-3xl md:text-4xl lg:text-5xl font-bold text-neon-purple mb-6"
         >
-          teams worldwide.
+          AI coding assistants.
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ const LogosRow = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white/50 text-base md:text-lg mb-12"
         >
-          Industry leaders building the future with Code Eternal.
+          Craft better prompts for any AI tool you use.
         </motion.p>
 
         {/* Logos Grid */}
