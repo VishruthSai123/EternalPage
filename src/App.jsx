@@ -1,6 +1,7 @@
 import Header from './components/Header'
 import Hero from './components/Hero'
 import CardGrid from './components/CardGrid'
+import FeaturesSection from './components/FeaturesSection'
 import Footer from './components/Footer'
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <main>
         <Hero />
         <CardGrid />
+        <FeaturesSection />
       </main>
       <Footer />
     </div>

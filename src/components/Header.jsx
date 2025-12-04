@@ -1,8 +1,19 @@
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
+﻿import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
-// Simple nav link with hover effect
-const NavLink = ({ href, children }) => {
+// Simple nav link with hover effect - supports both href and to
+const NavLink = ({ href, to, children }) => {
+  if (to) {
+    return (
+      <Link 
+        to={to} 
+        className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+      >
+        {children}
+      </Link>
+    )
+  }
   return (
     <a 
       href={href} 
@@ -58,7 +69,7 @@ const Header = () => {
   }, [isOpen])
 
   const navLinksData = [
-    { label: 'Features', href: '#features' },
+    { label: 'Features', to: '/features' },
     { label: 'Templates', href: '#templates' },
     { label: 'Download', href: '#download' },
   ]
@@ -94,7 +105,7 @@ const Header = () => {
         {/* Desktop Nav Links - Centered */}
         <nav className="hidden sm:flex items-center gap-6">
           {navLinksData.map((link) => (
-            <NavLink key={link.href} href={link.href}>
+            <NavLink key={link.to || link.href} href={link.href} to={link.to}>
               {link.label}
             </NavLink>
           ))}
@@ -133,13 +144,23 @@ const Header = () => {
                        ${isOpen ? 'max-h-[500px] opacity-100 pt-4' : 'max-h-0 opacity-0 pt-0 pointer-events-none'}`}>
         <nav className="flex flex-col items-center space-y-4 text-base w-full">
           {navLinksData.map((link) => (
-            <a 
-              key={link.href} 
-              href={link.href} 
-              className="text-gray-300 hover:text-white transition-colors w-full text-center"
-            >
-              {link.label}
-            </a>
+            link.to ? (
+              <Link 
+                key={link.to} 
+                to={link.to} 
+                className="text-gray-300 hover:text-white transition-colors w-full text-center"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a 
+                key={link.href} 
+                href={link.href} 
+                className="text-gray-300 hover:text-white transition-colors w-full text-center"
+              >
+                {link.label}
+              </a>
+            )
           ))}
         </nav>
         <div className="flex flex-col items-center mt-4 w-full">
