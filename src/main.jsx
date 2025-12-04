@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
 import Features from './pages/Features.jsx'
 import Templates from './pages/Templates.jsx'
@@ -12,7 +12,7 @@ import { ThemeProvider } from './components/ThemeProvider.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider>
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/features" element={<Features />} />
@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/changelog" element={<Changelog />} />
           <Route path="/download" element={<Download />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,
 )
