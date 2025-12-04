@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import GradientBlinds from './GradientBlinds'
 
 const Hero = () => {
@@ -71,12 +72,12 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <button className="btn-glow group inline-flex items-center gap-2 px-8 py-4 bg-white text-navy font-semibold rounded-full hover:bg-white/90 transition-all duration-300 shadow-lg shadow-white/10">
+          <Link to="/download" className="btn-glow group inline-flex items-center gap-2 px-8 py-4 bg-white text-navy font-semibold rounded-full hover:bg-white/90 transition-all duration-300 shadow-lg shadow-white/10">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
             <span>Download for Free</span>
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -70,8 +70,8 @@ const Header = () => {
 
   const navLinksData = [
     { label: 'Features', to: '/features' },
-    { label: 'Templates', href: '#templates' },
-    { label: 'Download', href: '#download' },
+    { label: 'Templates', to: '/templates' },
+    { label: 'Changes', to: '/changelog' },
   ]
 
   return (
@@ -115,9 +115,9 @@ const Header = () => {
         <div className="hidden sm:flex items-center">
           <div className="relative group">
             <div className="absolute inset-0 -m-1 rounded-full bg-neon-cyan/30 opacity-0 blur-lg pointer-events-none transition-all duration-300 ease-out group-hover:opacity-60 group-hover:blur-xl group-hover:-m-2"></div>
-            <button className="relative z-10 px-3 py-1.5 text-sm font-semibold text-navy bg-gradient-to-br from-neon-cyan to-neon-blue rounded-full hover:from-white hover:to-gray-200 transition-all duration-200">
+            <Link to="/download" className="relative z-10 px-3 py-1.5 text-sm font-semibold text-navy bg-gradient-to-br from-neon-cyan to-neon-blue rounded-full hover:from-white hover:to-gray-200 transition-all duration-200">
               Download
-            </button>
+            </Link>
           </div>
         </div>
 

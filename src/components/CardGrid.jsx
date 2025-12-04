@@ -97,7 +97,7 @@ const CardGrid = () => {
           className="relative z-10 text-center mb-6 px-6"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
-            <span className="gradient-text">Powerful Features</span>
+            <span className="gradient-text">Built For Vibe Coders</span>
           </h2>
           <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto">
             Everything you need to craft better prompts for your AI coding assistants

@@ -133,7 +133,15 @@ const Features = () => {
   const [isPaused, setIsPaused] = useState(false)
 
   return (
-    <section className="min-h-screen bg-navy flex flex-col">
+    <section className="min-h-screen bg-navy flex flex-col relative">
+      {/* Lamp Glow Effect at Top - Behind content */}
+      <div 
+        className="fixed top-0 left-0 right-0 h-[600px] pointer-events-none z-0"
+        style={{
+          background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 255, 255, 0.25) 0%, rgba(0, 255, 255, 0.1) 40%, transparent 70%)',
+        }}
+      />
+
       {/* Back Button */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
@@ -150,13 +158,13 @@ const Features = () => {
       </motion.div>
 
       {/* Background gradients */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-gradient-radial from-neon-purple/10 via-transparent to-transparent blur-3xl" />
         <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-gradient-radial from-neon-cyan/10 via-transparent to-transparent blur-3xl" />
       </div>
 
       {/* Header - Centered */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-20">
+      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-20 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
