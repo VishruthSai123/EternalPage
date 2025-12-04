@@ -18,21 +18,19 @@ const Header = () => {
   const [headerShapeClass, setHeaderShapeClass] = useState('rounded-full')
   const [isVisible, setIsVisible] = useState(true)
   const shapeTimeoutRef = useRef(null)
-  const lastScrollY = useRef(0)
   
   const { scrollY } = useScroll()
 
-  // Hide header on scroll down, show on scroll up
+  // Hide header when scrolling past the hero section (100vh)
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const direction = latest > lastScrollY.current ? "down" : "up"
+    const heroHeight = window.innerHeight // 100vh - hero section height
     
-    if (direction === "down" && latest > 100) {
+    // Hide header once user scrolls past the hero section
+    if (latest > heroHeight * 0.8) {
       setIsVisible(false)
     } else {
       setIsVisible(true)
     }
-    
-    lastScrollY.current = latest
   })
 
   const toggleMenu = () => {

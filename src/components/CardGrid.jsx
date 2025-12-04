@@ -1,276 +1,162 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
 
-const projectData = [
-  {
-    id: 1,
-    name: 'Prompt Builder',
-    project: {
-      name: 'Structured Prompts',
-      version: 'v2.1.0',
-      status: 'Active',
-      lastDeploy: 'Just now',
-      uptime: '100%',
-    },
-    statistics: {
-      builds: '2,847',
-      deployTime: 'Instant',
-      testCoverage: '98%',
-    },
-    technologies: [
-      { name: 'Context', color: 'bg-cyan-500/20 text-cyan-400' },
-      { name: 'Constraints', color: 'bg-blue-500/20 text-blue-400' },
-      { name: 'Tasks', color: 'bg-purple-500/20 text-purple-400' },
-      { name: 'Templates', color: 'bg-cyan-500/20 text-cyan-400' },
-      { name: 'Variables', color: 'bg-purple-500/20 text-purple-400' },
-      { name: 'Preview', color: 'bg-pink-500/20 text-pink-400' },
-      { name: 'Export', color: 'bg-green-500/20 text-green-400' },
-      { name: 'History', color: 'bg-orange-500/20 text-orange-400' },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Snippet Library',
-    project: {
-      name: 'Code Snippets',
-      version: 'v1.8.0',
-      status: 'Active',
-      lastDeploy: '1 hour ago',
-      uptime: '100%',
-    },
-    statistics: {
-      builds: '1,492',
-      deployTime: 'Instant',
-      testCoverage: '95%',
-    },
-    technologies: [
-      { name: 'React', color: 'bg-cyan-500/20 text-cyan-400' },
-      { name: 'TypeScript', color: 'bg-blue-500/20 text-blue-400' },
-      { name: 'Python', color: 'bg-yellow-500/20 text-yellow-400' },
-      { name: 'Node.js', color: 'bg-green-500/20 text-green-400' },
-      { name: 'SQL', color: 'bg-blue-500/20 text-blue-400' },
-      { name: 'GraphQL', color: 'bg-pink-500/20 text-pink-400' },
-      { name: 'Rust', color: 'bg-orange-500/20 text-orange-400' },
-      { name: 'Go', color: 'bg-cyan-500/20 text-cyan-400' },
-    ],
-  },
-  {
-    id: 3,
-    name: 'Templates',
-    project: {
-      name: 'Task Templates',
-      version: 'v1.5.2',
-      status: 'Active',
-      lastDeploy: '2 days ago',
-      uptime: '100%',
-    },
-    statistics: {
-      builds: '856',
-      deployTime: 'Instant',
-      testCoverage: '92%',
-    },
-    technologies: [
-      { name: 'Refactoring', color: 'bg-purple-500/20 text-purple-400' },
-      { name: 'Debugging', color: 'bg-red-500/20 text-red-400' },
-      { name: 'Testing', color: 'bg-green-500/20 text-green-400' },
-      { name: 'Documentation', color: 'bg-blue-500/20 text-blue-400' },
-      { name: 'Code Review', color: 'bg-yellow-500/20 text-yellow-400' },
-      { name: 'API Design', color: 'bg-pink-500/20 text-pink-400' },
-      { name: 'Optimization', color: 'bg-orange-500/20 text-orange-400' },
-    ],
-  },
-  {
-    id: 4,
-    name: 'Community Hub',
-    project: {
-      name: 'Shared Snippets',
-      version: 'v3.0.0',
-      status: 'Active',
-      lastDeploy: '3 hours ago',
-      uptime: '100%',
-    },
-    statistics: {
-      builds: '5,203',
-      deployTime: 'Instant',
-      testCoverage: '97%',
-    },
-    technologies: [
-      { name: 'Browse', color: 'bg-purple-500/20 text-purple-400' },
-      { name: 'Share', color: 'bg-cyan-500/20 text-cyan-400' },
-      { name: 'Fork', color: 'bg-green-500/20 text-green-400' },
-      { name: 'Star', color: 'bg-yellow-500/20 text-yellow-400' },
-      { name: 'Comment', color: 'bg-blue-500/20 text-blue-400' },
-      { name: 'Collections', color: 'bg-pink-500/20 text-pink-400' },
-      { name: 'Trending', color: 'bg-orange-500/20 text-orange-400' },
-    ],
-  },
+const screenshots = [
+  { id: 1, image: '/assets/1.png', alt: 'Code Eternal View 1' },
+  { id: 2, image: '/assets/2.png', alt: 'Code Eternal View 2' },
+  { id: 3, image: '/assets/3.png', alt: 'Code Eternal View 3' },
+  { id: 4, image: '/assets/4.png', alt: 'Code Eternal View 4' },
+  { id: 5, image: '/assets/5.png', alt: 'Code Eternal View 5' },
+  { id: 6, image: '/assets/6.png', alt: 'Code Eternal View 6' },
 ]
 
-const TechIcon = ({ name, color }) => (
-  <div className={`px-2 py-0.5 rounded text-[10px] font-medium ${color} whitespace-nowrap`}>
-    {name}
-  </div>
-)
-
-const ProjectCard = ({ data, index }) => {
+const ScreenshotCard = ({ data, index }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.1 * index }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="card-rim bg-[#0c0d12]/90 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-4 hover:border-white/10 transition-all duration-300 hover:shadow-card-hover"
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.05 * index }}
+      className="flex-shrink-0 w-[300px] md:w-[350px] lg:w-[400px] group"
     >
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/5">
-        <div className="w-5 h-5 rounded bg-white/10 flex items-center justify-center">
-          <svg className="w-3 h-3 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-          </svg>
-        </div>
-        <span className="text-sm font-medium text-white">{data.name}</span>
-      </div>
-
-      {/* Project Section */}
-      <div className="mb-4">
-        <div className="flex items-center gap-1.5 mb-2">
-          <svg className="w-3.5 h-3.5 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-          </svg>
-          <span className="text-xs font-medium text-white/70">Project</span>
-        </div>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
-          <div className="flex justify-between">
-            <span className="text-white/40">Name</span>
-            <span className="text-white/80">{data.project.name}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/40">Version</span>
-            <span className="text-neon-cyan font-medium">{data.project.version}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/40">Status</span>
-            <span className={`font-medium ${data.project.status === 'Production' ? 'text-green-400' : 'text-yellow-400'}`}>{data.project.status}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/40">Last Deploy</span>
-            <span className="text-white/80">{data.project.lastDeploy}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/40">Uptime</span>
-            <span className="text-green-400 font-medium">{data.project.uptime}</span>
-          </div>
-        </div>
-        {/* Action Icons */}
-        <div className="flex items-center gap-2 mt-2">
-          <div className="w-5 h-5 rounded bg-white/5 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
-            <svg className="w-3 h-3 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-          </div>
-          <div className="w-5 h-5 rounded bg-white/5 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
-            <svg className="w-3 h-3 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </div>
-          <div className="w-5 h-5 rounded bg-white/5 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
-            <svg className="w-3 h-3 text-white/50" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
-          </div>
-          <div className="w-5 h-5 rounded bg-white/5 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
-            <svg className="w-3 h-3 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      {/* Build Stats Section */}
-      <div className="mb-4">
-        <div className="flex items-center gap-1.5 mb-2">
-          <svg className="w-3.5 h-3.5 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-          <span className="text-xs font-medium text-white/70">Build Stats</span>
-        </div>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
-          <div className="flex justify-between">
-            <span className="text-white/40">Total Builds</span>
-            <span className="text-neon-cyan font-medium">{data.statistics.builds}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/40">Deploy Time</span>
-            <span className="text-white/80">{data.statistics.deployTime}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/40">Test Coverage</span>
-            <span className="text-green-400 font-medium">{data.statistics.testCoverage}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Technologies Section */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-            </svg>
-            <span className="text-xs font-medium text-white/70">Tech Stack</span>
-          </div>
-          <span className="text-[10px] text-white/40">{data.technologies.length}+</span>
-        </div>
-        <div className="flex flex-wrap gap-1">
-          {data.technologies.slice(0, 8).map((tech, i) => (
-            <TechIcon key={i} name={tech.name} color={tech.color} />
-          ))}
-          {data.technologies.length > 8 && (
-            <div className="px-2 py-0.5 rounded text-[10px] font-medium bg-white/5 text-white/40">
-              +{data.technologies.length - 8}
-            </div>
-          )}
-        </div>
-      </div>
+      {/* Screenshot Image - no container, just the image with subtle effects */}
+      <img 
+        src={data.image} 
+        alt={data.alt}
+        className="w-full h-auto object-cover rounded-xl transition-transform duration-500 group-hover:scale-[1.03]"
+        loading="lazy"
+      />
     </motion.div>
   )
 }
 
 const CardGrid = () => {
-  return (
-    <section className="relative px-6 pt-32 pb-16">
-      {/* Section heading */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-16"
-      >
-        <h2 className="text-2xl md:text-3xl font-bold text-white/90 mb-3">
-          Your Projects at a Glance
-        </h2>
-        <p className="text-white/50 text-sm md:text-base max-w-xl mx-auto">
-          Monitor builds, deployments, and tech stacks across all your projects
-        </p>
-      </motion.div>
+  const sectionRef = useRef(null)
+  const carouselRef = useRef(null)
+  const [carouselProgress, setCarouselProgress] = useState(0)
+  const [maxScroll, setMaxScroll] = useState(0)
 
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.2 }}
-        className="max-w-6xl mx-auto"
-      >
-        {/* Cards Frame Container */}
-        <div className="cards-frame p-6 md:p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {projectData.map((project, index) => (
-              <ProjectCard key={project.id} data={project} index={index} />
-            ))}
-          </div>
+  // Calculate the carousel's max scroll width
+  useEffect(() => {
+    const updateMaxScroll = () => {
+      if (carouselRef.current) {
+        const scrollWidth = carouselRef.current.scrollWidth
+        const clientWidth = carouselRef.current.clientWidth
+        setMaxScroll(scrollWidth - clientWidth)
+      }
+    }
+    
+    // Small delay to ensure images are loaded
+    const timer = setTimeout(updateMaxScroll, 100)
+    window.addEventListener('resize', updateMaxScroll)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('resize', updateMaxScroll)
+    }
+  }, [])
+
+  // Use scroll progress of the section
+  // "start start" = section top hits viewport top (0%)
+  // "end end" = section bottom hits viewport bottom (100%)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"]
+  })
+
+  // Transform vertical scroll to horizontal carousel position
+  const carouselX = useTransform(scrollYProgress, [0, 1], [0, -maxScroll])
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setCarouselProgress(latest)
+  })
+
+  // Calculate section height: 100vh for the sticky view + extra scroll distance
+  // The extra distance should be enough to scroll through all images
+  const sectionHeight = `${200 + screenshots.length * 30}vh`
+
+  return (
+    <section 
+      ref={sectionRef}
+      className="relative mt-32"
+      style={{ height: sectionHeight }}
+    >
+      {/* Sticky container - this stays fixed while user scrolls through the section */}
+      <div className="sticky top-0 left-0 right-0 h-screen w-full flex flex-col justify-start pt-10 overflow-hidden bg-navy">
+        {/* Background gradient effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 left-0 w-[600px] h-[600px] bg-gradient-radial from-neon-purple/8 via-transparent to-transparent blur-3xl" />
+          <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-gradient-radial from-neon-cyan/8 via-transparent to-transparent blur-3xl" />
         </div>
-      </motion.div>
+
+        {/* Section heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative z-10 text-center mb-6 px-6"
+        >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
+            <span className="gradient-text">Powerful Features</span>
+          </h2>
+          <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto">
+            Everything you need to craft better prompts for your AI coding assistants
+          </p>
+        </motion.div>
+
+        {/* Horizontal scrolling carousel */}
+        <div className="relative w-full overflow-hidden">
+          {/* Left fade gradient */}
+          <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-navy via-navy/90 to-transparent z-10 pointer-events-none" />
+          
+          {/* Right fade gradient */}
+          <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-navy via-navy/90 to-transparent z-10 pointer-events-none" />
+
+          {/* Carousel track */}
+          <motion.div
+            ref={carouselRef}
+            style={{ x: carouselX }}
+            className="flex gap-6 px-16 py-4"
+          >
+            {screenshots.map((screenshot, index) => (
+              <ScreenshotCard key={screenshot.id} data={screenshot} index={index} />
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Progress indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4">
+          <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
+            <motion.div 
+              className="h-full bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-magenta rounded-full"
+              style={{ width: `${carouselProgress * 100}%` }}
+            />
+          </div>
+          <span className="text-white/40 text-sm font-medium">
+            {Math.round(carouselProgress * 100)}%
+          </span>
+        </div>
+
+        {/* Scroll hint */}
+        {carouselProgress < 0.1 && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"
+          >
+            <span className="text-xs">Scroll to explore</span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </motion.div>
+          </motion.div>
+        )}
+      </div>
     </section>
   )
 }
